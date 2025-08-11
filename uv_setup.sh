@@ -1,7 +1,7 @@
 # .bashrc
 
-export UV_CACHE_DIR="~/placeholder"
-export UV_ENV_DIR="~/placeholder/env"
+export UV_CACHE_DIR="/mnt/home/tyen/.uv/uv_cache"
+export UV_ENV_DIR="/mnt/home/tyen/.uv/uv_venvs"
 
 declare -A dir_vars=(
   ["$UV_CACHE_DIR"]="UV_CACHE_DIR"
@@ -31,5 +31,32 @@ luv() {
             echo "Error: Virtual environment '$1' not found in $UV_ENV_DIR"
             return 1
         fi
+    fi
+}
+
+cuv() {
+    if [ $# -eq 0 ]; then
+        echo "Usage: cuv <venv_name> [additional uv venv arguments...]"
+        echo "Example: cuv myproject --python 3.11"
+        return 1
+    fi
+
+    local venv_name="$1"
+    shift  # Remove the first argument (venv_name) from $@
+
+    # Create the virtual environment
+    uv venv "$UV_ENV_DIR/$venv_name" "$@"
+}
+
+# Optional: Add completion for common uv venv flags
+_cuv_completion() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    # Common uv venv options
+    local opts="--python --seed --verbose --quiet --help"
+
+    if [[ ${cur} == -* ]]; then
+        COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
     fi
 }
