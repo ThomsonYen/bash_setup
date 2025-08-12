@@ -1,7 +1,7 @@
 # .bashrc
 
-export UV_CACHE_DIR="/mnt/home/tyen/.uv/uv_cache"
-export UV_ENV_DIR="/mnt/home/tyen/.uv/uv_venvs"
+export UV_CACHE_DIR="/placeholder/.uv/uv_cache"
+export UV_ENV_DIR="/placeholder/.uv/uv_venvs"
 
 declare -A dir_vars=(
   ["$UV_CACHE_DIR"]="UV_CACHE_DIR"
