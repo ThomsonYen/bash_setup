@@ -5,8 +5,10 @@ cd "$(dirname "$0")" || exit 1
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# Set ZSH_CUSTOM to the specific cache directory
-echo 'export ZSH_COMPDUMP="$HOME/.cache/zsh/zcompdump"' >> $HOME/.zshrc
+# Set my_zshrc.sh as the main zsh configuration file
+if [ -f "$HOME/.zshrc" ]; then
+    mv "$HOME/.zshrc" "$HOME/.zshrc.backup"
+    echo "Existing .zshrc file backed up as .zshrc.backup"
+fi
 
-# Change scheme
-bash ./change_theme.sh
+ln -s "$(pwd)/my_zshrc.sh" "$HOME/.zshrc"
