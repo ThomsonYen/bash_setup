@@ -20,6 +20,8 @@ Host DataCrunch01
 2. Setup uv
   - run `uv/_main_setup.sh`
   - edit uv paths at the top of `~/.shell_setup/uv_setup.sh`
+3. Setup tmux:
+  - run `tmux/_main_setup.sh`
 
 ## [Optional] Create cheatsheet.sh w/ compute-specific commands
 
