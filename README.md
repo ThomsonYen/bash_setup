@@ -19,3 +19,9 @@ Host DataCrunch01
   - edit uv paths at the top of `~/.shell_setup/uv_setup.sh`
 
 ## [Optional] Create cheatsheet.sh w/ compute-specific commands
+
+## TODOs
+- Add git setup instructions
+- Add main script to setup everything
+
+
