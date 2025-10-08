@@ -8,6 +8,10 @@ else
     echo "uv is already installed."
 fi
 
+# Download gpustat
+echo "Installing gpustat..."
+uv tool install gpustat
+
 # Change executation location to script's directory
 cd "$(dirname "$0")" || exit 1
 
