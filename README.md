@@ -11,6 +11,9 @@ Host DataCrunch01
   IdentityFile <ssh_file_path>
 ```
 
+## Setup Git
+- `git config --global credential.helper store`
+
 ## Git Clone this Repo
 
 1. Setup zshrc: run `zshrc/_main_setup.sh`
