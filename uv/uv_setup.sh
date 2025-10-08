@@ -1,11 +1,10 @@
 # .bashrc
 
-export UV_DIR="/placeholder/.uv"
-
-mkdir -p "$UV_DIR"
+export UV_DIR="~/placeholder/.uv"
 export UV_CACHE_DIR="$UV_DIR/uv_cache"
 export UV_ENV_DIR="$UV_DIR/uv_venvs"
 
+# Check initialization
 declare -A dir_vars=(
   ["$UV_CACHE_DIR"]="UV_CACHE_DIR"
   ["$UV_ENV_DIR"]="UV_ENV_DIR"
@@ -15,6 +14,13 @@ for dir in "$UV_CACHE_DIR" "$UV_ENV_DIR"; do
   if [[ "$dir" == *"placeholder"* ]]; then
     var_name="${dir_vars[$dir]}"
     echo "Error: Global variable '$var_name' is set to '$dir' which contains placeholder values. Please choose a different directory."
+  fi
+done
+
+# Create directories if they don't exist
+for dir in "$UV_DIR" "$UV_CACHE_DIR" "$UV_ENV_DIR"; do
+  if [ ! -d "$dir" ]; then
+    mkdir -p "$dir"
   fi
 done
 
