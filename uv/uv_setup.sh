@@ -14,6 +14,16 @@ for dir in "$UV_CACHE_DIR" "$UV_ENV_DIR"; do
   if [[ "$dir" == *"placeholder"* ]]; then
     var_name="${dir_vars[$dir]}"
     echo "Error: Global variable '$var_name' is set to '$dir' which contains placeholder values. Please choose a different directory."
+
+    # Prompt user for new directory
+    read -p "Enter a new path for UV directory: " new_path
+    if [ -n "$new_path" ]; then
+      UV_DIR="${new_path%/*}"
+      UV_CACHE_DIR="$UV_DIR/uv_cache"
+      UV_ENV_DIR="$UV_DIR/uv_venvs"
+    else
+      echo "No input provided. Exiting setup."
+      return 1
   fi
 done
 
