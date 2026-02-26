@@ -24,6 +24,7 @@ for dir in "$UV_CACHE_DIR" "$UV_ENV_DIR"; do
     else
       echo "No input provided. Exiting setup."
       return 1
+    fi
   fi
 done
 
