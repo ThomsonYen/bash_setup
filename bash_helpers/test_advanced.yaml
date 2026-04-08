@@ -1,0 +1,64 @@
+# Test file for advanced YAML parser features
+
+key:
+  item: value
+
+key2:
+  nested_key:
+    nested_item: nested_value
+  nested_key2:
+    nested_item2: nested_value2
+  listed_items:
+    - item1
+    - item2
+    - item3
+
+# --- Multi-line strings ---
+multiline_literal: |
+  This is line one.
+  This is line two.
+  This is line three.
+
+multiline_folded: >
+  This is a long
+  paragraph that should
+  be folded into one line.
+
+# --- Inline/trailing comments ---
+commented_value: actual_value # this is a comment
+quoted_with_hash: "value # not a comment"
+single_quoted_hash: 'value # also not a comment'
+
+# --- Flow syntax ---
+flow_mapping: {name: Alice, age: 30, city: Wonderland}
+flow_sequence: [red, green, blue]
+nested_flow:
+  inline_list: [one, two, three]
+  inline_map: {x: 1, y: 2}
+
+# --- Anchors and aliases ---
+defaults: &defaults
+  adapter: postgres
+  host: localhost
+
+development:
+  database: dev_db
+  <<: *defaults
+
+production:
+  database: prod_db
+  <<: *defaults
+  host: prod-server
+
+# --- Variable references ---
+base_dir: /opt/app
+config_dir: ${base_dir}/config
+log_dir: ${base_dir}/logs
+nested_ref: ${config_dir}/settings.yaml
+dev_conn: ${defaults.adapter}://${defaults.host}/${development.database}
+
+# --- Environment variable references ---
+home_dir: ${env:HOME}
+missing_with_default: ${env:NONEXISTENT_VAR:-fallback_value}
+missing_no_default: ${env:NONEXISTENT_VAR2}/projects
+combined: ${env:HOME}/projects/${base_dir}
