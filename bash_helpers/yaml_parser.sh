@@ -423,17 +423,17 @@ _yaml_parse() {
             local _resolved="$_rval"
             while [[ "$_resolved" =~ \$\{([A-Za-z0-9_.-]+)\} ]]; do
                 local _ref="${BASH_REMATCH[1]}"
-                local _ref_var="${_var_prefix}${_ref}"
-                local _ref_val="${!_ref_var}"
+                # Dots in ${foo.bar} refer to nested keys and must be
+                # sanitized before indirect expansion — bash rejects `.`
+                # in variable names.
+                local _ref_sanitized="${_ref//./__}"
+                local _ref_var="${_var_prefix}${_ref_sanitized}"
+                local _ref_val="${!_ref_var-}"
                 if [[ -z "$_ref_val" ]]; then
-                    _ref_var="${_var_prefix}${_ref//./__}"
-                    _ref_val="${!_ref_var}"
+                    _ref_var="${_var_prefix}${_ref_sanitized//_/__}"
+                    _ref_val="${!_ref_var-}"
                 fi
-                if [[ -z "$_ref_val" ]]; then
-                    _ref_var="${_var_prefix}${_ref//_/__}"
-                    _ref_val="${!_ref_var}"
-                fi
-                if [[ -z "$_ref_val" && -n "${!_ref:-}" ]]; then
+                if [[ -z "$_ref_val" && "$_ref" != *.* && -n "${!_ref:-}" ]]; then
                     _ref_val="${!_ref}"
                 fi
                 _resolved="${_resolved/\$\{${_ref}\}/${_ref_val}}"
